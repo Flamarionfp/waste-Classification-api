@@ -1,0 +1,78 @@
+# -----------------------------------
+# PYTHON
+# -----------------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.pickle
+
+# Virtual env
+.env/
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# Byte-compiled
+*.so
+
+# -----------------------------------
+# MACHINE LEARNING / MODELOS
+# -----------------------------------
+waste_classifier.pkl
+label_encoder.pkl
+dataset-cache/
+*.npz
+*.h5
+*.hdf5
+*.pt
+*.pth
+
+# -----------------------------------
+# DATASET
+# -----------------------------------
+# Ignore TODAS as imagens da pasta dataset,
+# mas mantenha a pasta no repositório.
+dataset/*
+!dataset/.gitkeep
+
+# -----------------------------------
+# FASTAPI / BUILD
+# -----------------------------------
+uvicorn.log
+
+# -----------------------------------
+# DOCKER
+# -----------------------------------
+build/
+dist/
+*.tar
+
+# -----------------------------------
+# SISTEMA OPERACIONAL
+# -----------------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------------
+# IDEs / EDITORES
+.vscode/
+.code-workspace
+.idea/
+
+# -----------------------------------
+# OUTROS
+*.tmp
+*.temp
+*.swp
+*.lock
+pip-wheel-metadata/
+pip-log.txt
+*.zip
+*.rar
+*.7z
+*.gz

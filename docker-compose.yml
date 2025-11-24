@@ -1,0 +1,15 @@
+services:
+  waste-api:
+    build: .
+    image: waste-classifier:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - UVICORN_WORKERS=2
+      - MODEL_PATH=/app/waste_classifier.pkl
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
