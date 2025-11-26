@@ -56,3 +56,7 @@ def list_classes():
         })
 
     return JSONResponse(content={"classes": items})
+
+@app.get("/")
+def health_check():
+    return JSONResponse(content={"status": "UP"})
