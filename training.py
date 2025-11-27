@@ -2,11 +2,11 @@ import os
 import numpy as np
 import pandas as pd
 from PIL import Image
-from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.pipeline import make_pipeline
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 import joblib
 
 DATASET_DIR = os.getenv("DATASET_DIR", "dataset")
@@ -29,6 +29,7 @@ df = pd.DataFrame({"filepath": filepaths, "label": labels})
 label_encoder = LabelEncoder()
 df["label_encoded"] = label_encoder.fit_transform(df["label"])
 
+
 def load_images_to_array(df):
     X_list = []
     y_list = []
@@ -42,23 +43,41 @@ def load_images_to_array(df):
 
     return np.array(X_list), np.array(y_list)
 
-X, y = load_images_to_array(df)
 
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=42
+# ===== SPLIT =====
+df_train, df_test = train_test_split(
+    df,
+    test_size=0.01,     
+    stratify=df["label"],
+    random_state=42
 )
 
+X_train, y_train = load_images_to_array(df_train)
+X_test, y_test = load_images_to_array(df_test)
+
+
+# ===== MODELO =====
 model = make_pipeline(
     StandardScaler(),
-    MLPClassifier(hidden_layer_sizes=(256, 128), max_iter=300)
+    MLPClassifier(
+        hidden_layer_sizes=(1024, 512, 256),
+        activation="relu",
+        max_iter=20000,
+        alpha=1e-4,
+        batch_size=128,
+        learning_rate_init=1e-3,
+        early_stopping=True,
+        n_iter_no_change=20
+    )
 )
 
 model.fit(X_train, y_train)
 
+
 preds = model.predict(X_test)
 acc = accuracy_score(y_test, preds)
 print("Acurácia:", acc)
+
 
 # Salvar o modelo
 joblib.dump({
@@ -67,4 +86,4 @@ joblib.dump({
     "img_size": IMG_SIZE
 }, MODEL_PATH)
 
-print("Modelo salvo em:", MODEL_PATH)
+print("Modelo treinado e salvo em:", MODEL_PATH)
