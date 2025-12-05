@@ -57,6 +57,13 @@ X_test, y_test = load_images_to_array(df_test)
 
 
 # ===== MODELO =====
+# Esse bloco cria um pipeline que primeiro normaliza os dados e 
+# depois treina uma rede neural MLP robusta, com três camadas 
+# grandes (1024 → 512 → 256 neurônios), usando ReLU para acelerar o 
+# aprendizado. O modelo treina por bastante tempo, mas conta com regularização e 
+# early stopping para evitar overfitting. A taxa de aprendizado é moderada, o batch 
+# é relativamente grande, e o treinamento para automaticamente quando percebe que não está 
+# mais evoluindo.
 model = make_pipeline(
     StandardScaler(),
     MLPClassifier(
@@ -70,6 +77,8 @@ model = make_pipeline(
         n_iter_no_change=20
     )
 )
+
+
 
 model.fit(X_train, y_train)
 

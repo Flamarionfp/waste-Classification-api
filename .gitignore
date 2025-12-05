@@ -33,14 +33,6 @@ dataset-cache/
 *.pth
 
 # -----------------------------------
-# DATASET
-# -----------------------------------
-# Ignore TODAS as imagens da pasta dataset,
-# mas mantenha a pasta no repositório.
-dataset/*
-!dataset/.gitkeep
-
-# -----------------------------------
 # FASTAPI / BUILD
 # -----------------------------------
 uvicorn.log
